@@ -15,11 +15,17 @@ import java.util.List;
 public class StudentDao {
     
     private static final String URL = "jdbc:mysql://localhost:3306/skillnext_db";
-    private static final String USER = "root";
+    private static final String USER = "root"; 
     private static final String PASSWORD = "rouf4685"; 
+    
+     private Connection getConnection() throws SQLException {
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("MySQL JDBC Driver not found", e);
+        }
     }
       public boolean exists(int id) throws Exception {
         Connection conn = getConnection();
@@ -84,3 +90,4 @@ public class StudentDao {
   
 
 }
+ 
